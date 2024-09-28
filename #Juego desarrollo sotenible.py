@@ -187,3 +187,41 @@ if respuestas_correctas >= 3:
             exit()
 else:
     print("No has respondido correctamente a suficientes preguntas, por lo que no puedes contratar a más trabajadores por el momento.")
+    
+# Verificar la condición de empleo decente
+if not mi_empresa.verificar_empleo():
+    print("Ninguno de tus trabajadores es novato, lo que ha resultado en exceso de carga de trabajo para los experimentados. Los trabajadores se han ido y la empresa no ha generado empleo suficiente.")
+    mi_empresa.trabajadores = []  # Todos los trabajadores se van
+    exit()
+
+# Mostrar la descripción de todos los trabajadores contratados
+print("Descripción de los trabajadores en la empresa:")
+mi_empresa.mostrar_trabajadores()
+
+# Añadir un manager y mostrar su descripción
+manager_nombre = input("Un manager ha visto tu empresa, y confia en ti para un proyecto, se identifica como...: ")
+manager_salario = float(input(f"Ingrese el salario por hora del manager {manager_nombre}: $"))
+manager_horas_trabajo = int(input(f"Ingrese las horas de trabajo por día del manager {manager_nombre}: "))
+manager_experiencia = input(f"Ingrese la experiencia del manager {manager_nombre} (novato, medio, experimentado): ")
+manager = Manager(manager_nombre, manager_salario * manager_horas_trabajo, manager_horas_trabajo, manager_experiencia, mi_empresa.trabajadores)
+
+if salario_trabajador * horas_trabajo * 30 < 1000: 
+    print(f"Lo siento, {manager_nombre}, el salario ofrecido es demasiado bajo.")
+else:
+    if mi_empresa.condiciones_aptas(manager):
+        mi_empresa.contratar(manager)
+        print(f"Has contratado a un manager: {manager_nombre}")
+        print("Descripción del manager y su equipo:")
+        print(manager.describir())
+    else:
+        print("No has cumplido con las condiciones laborales mínimas para los trabajadores. El juego no puede continuar.")
+        exit()
+
+# Verificar el final para el dueño de la empresa
+if mi_empresa.crecimiento >= 3:
+    print("¡La empresa prosperó y tiene un mejor rendimiento! Has logrado entender correctamente la importancia de generar" , "\n" ,
+    "empleo tanto para los empresarios como los propios trabajadores. Lograste comprender esto y tu empresa fue creciendo poco a poco, y cumplio con el ODS 8" ,  "\n" ,
+    "(trabajo decente y crecimiento económico)")
+else:
+    print("No has logrado entender que el generar empleo digno, y tomar buenas decisiones pensando en tus empleados y en ti, llevarian a la perdicion cualquier empresa" , "\n" ,
+    "tu propia empresa ha caido en quiebra por no pensar en el empleo digno, y no cumplir con el ODS8, lo siento, vuelve a intentarlo")
