@@ -89,3 +89,41 @@ else:
     else:
         print("No has cumplido con las condiciones laborales mínimas para los trabajadores. El juego no puede continuar.")
         exit()
+
+# Primera tanda de preguntas
+respuestas_correctas = 0
+situaciones = [
+    ("El mercado está en auge y tienes la oportunidad de expandir tu negocio. ¿Expandir (E) o Consolidar (C)?", 'E',
+     "Decidiste no aprovechar el mercado en auge para expandir tu negocio. Como resultado, tu competencia ganó más cuota de mercado."),
+    ("Un cliente importante tiene una queja sobre la calidad del servicio. ¿Ofrecer un reembolso (R) o Ignorar la queja (I)?", 'R',
+     "Decidiste ignorar la queja de un cliente importante. Esto resultó en una mala reputación para tu empresa y la pérdida de futuros clientes."),
+    ("Un empleado sugiere una nueva idea para mejorar la eficiencia. ¿Implementar (I) o Rechazar (R)?", 'I',
+     "Decidiste rechazar la idea de tu empleado. Como resultado, la eficiencia de tu empresa no mejoró y perdiste la oportunidad de aumentar tu productividad."),
+    ("El gobierno ofrece un subsidio para empresas que invierten en energía renovable. ¿Aceptar (A) o Rechazar (R)?", 'A',
+     "Rechazaste la oferta de subsidio para invertir en energía renovable. Más tarde, te diste cuenta de que tus competidores aprovecharon la oportunidad para reducir costos y mejorar su imagen."),
+    ("Hay una oportunidad de capacitar a los empleados en nuevas habilidades. ¿Capacitar (C) o No invertir (N)?", 'C',
+     "Decidiste no invertir en la capacitación de tus empleados. Como resultado, la productividad de tu empresa no mejoró y tus empleados se sintieron desmotivados."),
+    ("Tu proveedor principal ha aumentado sus precios. ¿Buscar un nuevo proveedor (B) o Aceptar los nuevos precios (A)?", 'B',
+     "Decidiste aceptar los nuevos precios de tu proveedor principal. Esto resultó en una disminución en tus márgenes de ganancia."),
+    ("Un competidor está ofreciendo un producto similar a un precio más bajo. ¿Reducir tus precios (R) o Mantenerlos (M)?", 'R',
+      "Decidiste mantener tus precios a pesar de la competencia. Como resultado, perdiste una parte de tu base de clientes."),
+    ("Tu empresa ha recibido una gran cantidad de críticas negativas en las redes sociales. ¿Responder a las críticas (R) o Ignorarlas (I)?", 'R',
+     "Decidiste ignorar las críticas en las redes sociales. Esto resultó en una disminución de la confianza del cliente y una pérdida de reputación.")
+]
+
+for _ in range(3):
+    situacion, opcion_correcta, mensaje_malo = random.choice(situaciones)
+    decision = input(situacion + " ")
+
+    if decision.upper() == opcion_correcta:
+        print("Decisión correcta. Ganas puntos de crecimiento.")
+        mi_empresa.crecimiento_economico(2)
+        respuestas_correctas += 1
+    else:
+        print("Decisión incorrecta. Pierdes puntos de crecimiento.")
+        mi_empresa.crecimiento_economico(-1)
+        print(mensaje_malo)
+
+    if random.random() < 0.3:
+        print("Ha ocurrido un evento inesperado que afecta negativamente a tu empresa.")
+        mi_empresa.crecimiento -= 1
