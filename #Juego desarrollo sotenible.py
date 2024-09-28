@@ -127,3 +127,63 @@ for _ in range(3):
     if random.random() < 0.3:
         print("Ha ocurrido un evento inesperado que afecta negativamente a tu empresa.")
         mi_empresa.crecimiento -= 1
+
+# Contratación del segundo trabajador
+if respuestas_correctas >= 1:
+    nombre_trabajador = input("Pese a todo la empresa poco a poco sigue creciendo, otra persona llega a pedirte empleo, su nombre es...: ")
+    salario_trabajador = float(input(f"Ingrese el salario por hora de {nombre_trabajador}: $"))
+    horas_trabajo = int(input(f"Ingrese las horas de trabajo por día de {nombre_trabajador}: "))
+    experiencia_trabajador = input(f"Ingrese la experiencia de {nombre_trabajador} (novato, medio, experimentado): ")
+
+    segundo_trabajador = Trabajador(nombre_trabajador, salario_trabajador * horas_trabajo, horas_trabajo, experiencia_trabajador)
+
+    if salario_trabajador * horas_trabajo * 30 < 1000:  # Verifica si el salario mensual es inferior a $1000
+        print(f"Lo siento, {nombre_trabajador}, el salario ofrecido es demasiado bajo.")
+    else:
+        if mi_empresa.condiciones_aptas(segundo_trabajador):
+            mi_empresa.contratar(segundo_trabajador)
+            print(f"Has contratado a {nombre_trabajador} con un salario de ${segundo_trabajador.salario} por día y trabajará {segundo_trabajador.horas_trabajo} horas por día.")
+        else:
+            print("No has cumplido con las condiciones laborales mínimas para los trabajadores. El juego no puede continuar.")
+            exit()
+else:
+    print("No has respondido correctamente a suficientes preguntas, por lo que no puedes contratar a más trabajadores por el momento.")
+
+# Segunda tanda de preguntas
+for _ in range(3):
+    situacion, opcion_correcta, mensaje_malo = random.choice(situaciones)
+    decision = input(situacion + " ")
+
+    if decision.upper() == opcion_correcta:
+        print("Decisión correcta. Ganas puntos de crecimiento.")
+        mi_empresa.crecimiento_economico(1)
+        respuestas_correctas += 1
+    else:
+        print("Decisión incorrecta. Pierdes puntos de crecimiento.")
+        mi_empresa.crecimiento_economico(-1)
+        print(mensaje_malo)
+
+    if random.random() < 0.3:
+        print("Ha ocurrido un evento inesperado que afecta negativamente a tu empresa.")
+        mi_empresa.crecimiento -= 1
+
+# Contratación del tercer trabajador
+if respuestas_correctas >= 3:
+    nombre_trabajador = input("Vaya, ya te estas volviendo conocido, una tercera persona llega a contactarse contigo para que lo contrates, y te recuerda que contratar novatos es importante, su nombre es: ")
+    salario_trabajador = float(input(f"Ingrese el salario por hora de {nombre_trabajador}: $"))
+    horas_trabajo = int(input(f"Ingrese las horas de trabajo por día de {nombre_trabajador}: "))
+    experiencia_trabajador = input(f"Ingrese la experiencia de {nombre_trabajador} (novato, medio, experimentado): ")
+
+    tercer_trabajador = Trabajador(nombre_trabajador, salario_trabajador * horas_trabajo, horas_trabajo, experiencia_trabajador)
+
+    if salario_trabajador * horas_trabajo * 30 < 1000:  # Verifica si el salario mensual es inferior a $1000
+        print(f"Lo siento, {nombre_trabajador}, el salario ofrecido es demasiado bajo.")
+    else:
+        if mi_empresa.condiciones_aptas(tercer_trabajador):
+            mi_empresa.contratar(tercer_trabajador)
+            print(f"Has contratado a {nombre_trabajador} con un salario de ${tercer_trabajador.salario} por día y trabajará {tercer_trabajador.horas_trabajo} horas por día.")
+        else:
+            print("No has cumplido con las condiciones laborales mínimas para los trabajadores. El juego no puede continuar.")
+            exit()
+else:
+    print("No has respondido correctamente a suficientes preguntas, por lo que no puedes contratar a más trabajadores por el momento.")
